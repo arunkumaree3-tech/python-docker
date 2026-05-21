@@ -1,39 +1,40 @@
-name: Pyhton Artifact Pipeline
+name: Python Artifact Pipeline
 
 on:
- push:
-  branches:
-   - main
+  push:
+    branches:
+      - main
 
 jobs:
- builds:
-   runs-on: ubuntu-latest
+  build:
 
-   steps:
+    runs-on: ubuntu-latest
 
-   - name: checkout code
-     uses: actions/checkout@v4
+    steps:
 
-  - name: python setup
-    uses: actions/setup-python@v5
-    with:
-     python-version: '3.11'
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-  - name: install dependencies
-    run: |
-     pip install -r requirements.txt
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-  - name: run tests
-    run: |
-     pytest
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
 
-  - name: generate build artifact
-    run: |
-      mkdir: dist
-        echo " Production Build " > dist/build.txt
+      - name: Run Tests
+        run: |
+          pytest
 
-  - name: upload artifact
-    uses: actions/upload/artifact@v4
-    with:
-     name: python-build-artifact
-     path: dist/
+      - name: Generate Build Artifact
+        run: |
+          mkdir dist
+          echo "Production Build" > dist/build.txt
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-build-artifact
+          path: dist/
