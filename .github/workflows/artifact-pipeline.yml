@@ -1,0 +1,39 @@
+name: Pyhton Artifact Pipeline
+
+on:
+ push:
+  branches:
+   - main
+
+jobs:
+ builds:
+   runs-on: ubuntu-latest
+
+   steps:
+
+   - name: checkout code
+     uses: actions/checkout@v4
+
+  - name: python setup
+    uses: actions/setup-python@v5
+    with:
+     python-version: '3.11'
+
+  - name: install dependencies
+    run: |
+     pip install -r requirements.txt
+
+  - name: run tests
+    run: |
+     pytest
+
+  - name: generate build artifact
+    run: |
+      mkdir: dist
+        echo " Production Build " > dist/build.txt
+
+  - name: upload artifact
+    uses: actions/upload/artifact@v4
+    with:
+     name: python-build-artifact
+     path: dist/
