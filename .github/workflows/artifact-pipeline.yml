@@ -30,7 +30,7 @@ jobs:
 
       - name: Generate Build Artifact
         run: |
-          mkdir dist
+          mkdir -p dist
           echo "Production Build" > dist/build.txt
 
       - name: Upload Artifact
